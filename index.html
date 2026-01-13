@@ -1,26 +1,24 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ambikon | Blog Sistema Dual CBTis 166</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ambikon | Modelo Dual CBTis 166</title>
 
   <style>
     :root{
-      /* Pastel palette */
-      --bg1:#fff7fb;      /* rosa muy suave */
-      --bg2:#f3fbff;      /* azul muy suave */
+      --bg1:#fff7fb;
+      --bg2:#f3fbff;
       --card:#ffffffcc;
       --line:#e9e6f2;
       --text:#223046;
       --muted:#5b6a7a;
 
-      --p1:#ffd7e8;       /* rosa pastel */
-      --p2:#d8f3ff;       /* azul pastel */
-      --p3:#dcf8e6;       /* verde pastel */
-      --p4:#fff1c9;       /* amarillo pastel */
-      --accent:#8aa6ff;   /* acento lavanda */
-      --accent2:#7bd6c7;  /* acento menta */
+      --p1:#ffd7e8;
+      --p2:#d8f3ff;
+      --p3:#dcf8e6;
+      --accent:#8aa6ff;
+      --accent2:#7bd6c7;
     }
 
     *{ box-sizing:border-box; }
@@ -45,6 +43,7 @@
       background: rgba(255,255,255,.65);
       border-bottom:1px solid var(--line);
     }
+
     .topbar{
       display:flex;
       align-items:center;
@@ -57,44 +56,45 @@
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 240px;
     }
+
     .logo{
       width:44px; height:44px;
       border-radius:14px;
       background: linear-gradient(135deg, var(--p1), var(--p2));
       border:1px solid var(--line);
-      box-shadow: 0 12px 30px rgba(34,48,70,.08);
       display:grid;
       place-items:center;
       overflow:hidden;
     }
+
     .logo img{
       width:100%;
       height:100%;
       object-fit:contain;
       padding:6px;
-      background: rgba(255,255,255,.6);
+      background: rgba(255,255,255,.7);
     }
 
-    .brand h1{ margin:0; font-size:16px; letter-spacing:.2px; }
-    .brand small{ display:block; color:var(--muted); font-size:12px; margin-top:2px; }
+    .brand h1{ margin:0; font-size:16px; }
+    .brand small{ color:var(--muted); font-size:12px; }
 
     nav{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      justify-content:flex-end;
     }
+
     nav a{
-      padding:9px 11px;
+      padding:9px 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.6);
       color:var(--muted);
       font-weight:600;
       font-size:13px;
     }
+
     nav a:hover{
       color:var(--text);
       border-color: rgba(138,166,255,.55);
@@ -102,29 +102,28 @@
     }
 
     .hero{
-      padding:26px 0 14px;
+      padding:28px 0 18px;
     }
-    .hero .wrap{
+
+    .wrap{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.75);
       border-radius:22px;
-      box-shadow: 0 18px 60px rgba(34,48,70,.08);
-      padding:18px;
+      padding:22px;
       display:grid;
       grid-template-columns: 1.3fr .9fr;
-      gap:16px;
-      overflow:hidden;
+      gap:18px;
     }
-    @media (max-width: 900px){
-      .hero .wrap{ grid-template-columns:1fr; }
-      .brand{ min-width:auto; }
+
+    @media(max-width:900px){
+      .wrap{ grid-template-columns:1fr; }
     }
 
     .badge{
       display:inline-flex;
       gap:8px;
       align-items:center;
-      padding:8px 10px;
+      padding:8px 12px;
       border-radius:999px;
       border:1px solid var(--line);
       background: linear-gradient(135deg, rgba(255,215,232,.7), rgba(216,243,255,.7));
@@ -133,6 +132,7 @@
       font-weight:700;
       width:max-content;
     }
+
     .dot{
       width:8px; height:8px;
       border-radius:50%;
@@ -140,475 +140,221 @@
     }
 
     .hero h2{
-      margin:10px 0 8px;
+      margin:12px 0 8px;
       font-size:32px;
-      line-height:1.15;
       letter-spacing:-.02em;
     }
-    .hero p{ margin:0; color:var(--muted); max-width:70ch; }
 
-    .hero .cards{
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      max-width:70ch;
+    }
+
+    .cards{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      align-content:start;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
     }
-    @media (max-width: 520px){
-      .hero .cards{ grid-template-columns:1fr; }
+
+    @media(max-width:520px){
+      .cards{ grid-template-columns:1fr; }
     }
+
     .mini{
       border:1px solid var(--line);
       border-radius:18px;
-      background: rgba(255,255,255,.75);
-      padding:12px;
+      background: rgba(255,255,255,.85);
+      padding:14px;
     }
-    .mini strong{ display:block; font-size:13px; margin-bottom:4px; }
-    .mini span{ color:var(--muted); font-size:12px; }
+
+    .mini strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:6px;
+    }
+
+    .mini span{
+      color:var(--muted);
+      font-size:13px;
+    }
 
     .layout{
       display:grid;
       grid-template-columns: 1.6fr .9fr;
-      gap:16px;
-      padding: 12px 0 44px;
+      gap:18px;
+      padding: 18px 0 48px;
     }
-    @media (max-width: 900px){
+
+    @media(max-width:900px){
       .layout{ grid-template-columns:1fr; }
     }
 
     .card{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.70);
+      background: rgba(255,255,255,.8);
       border-radius:22px;
-      box-shadow: 0 18px 60px rgba(34,48,70,.08);
       overflow:hidden;
     }
 
     .post{
       padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .post + .post{ border-top:1px solid var(--line); }
-
-    .kicker{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:700;
-    }
-    .chip{
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.65);
-      font-weight:800;
-      letter-spacing:.2px;
+      border-bottom:1px solid var(--line);
     }
 
-    .post h3{ margin:0; font-size:20px; }
-    .meta{ color:var(--muted); font-size:13px; }
-    .excerpt{ margin:0; color:var(--text); opacity:.92; }
+    .post:last-child{ border-bottom:none; }
 
-    .btnrow{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .btn{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.6);
-      padding:10px 12px;
-      border-radius:14px;
-      font-weight:800;
-      cursor:pointer;
+    .post h3{ margin:6px 0; font-size:20px; }
+    .meta{ font-size:13px; color:var(--muted); }
+
+    .excerpt{
+      margin:8px 0;
       color:var(--text);
     }
-    .btn:hover{
-      border-color: rgba(123,214,199,.65);
-      box-shadow: 0 0 0 4px rgba(123,214,199,.18);
-    }
-    .btn.primary{
+
+    .btn{
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
       background: linear-gradient(135deg, rgba(138,166,255,.35), rgba(123,214,199,.25));
-      border-color: rgba(138,166,255,.55);
+      font-weight:700;
+      cursor:pointer;
     }
 
     aside .box{
-      padding:14px;
+      padding:16px;
       border:1px solid var(--line);
       border-radius:18px;
-      background: rgba(255,255,255,.75);
-      margin:14px;
+      background: rgba(255,255,255,.9);
+      margin-bottom:14px;
     }
-    aside .box h4{ margin:0 0 8px; font-size:14px; }
-    aside .box p{ margin:0; color:var(--muted); font-size:13px; }
 
-    input, textarea{
-      width:100%;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.75);
-      color:var(--text);
-      outline:none;
-    }
-    input:focus, textarea:focus{
-      border-color: rgba(138,166,255,.55);
-      box-shadow: 0 0 0 4px rgba(138,166,255,.16);
-    }
-    textarea{ min-height:110px; resize:vertical; }
-
-    .pillrow{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-    .pill{
-      font-size:12px;
-      color:var(--muted);
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.65);
-      cursor:pointer;
-      user-select:none;
-      font-weight:800;
-    }
-    .pill:hover{
-      color:var(--text);
-      border-color: rgba(138,166,255,.55);
-      box-shadow: 0 0 0 4px rgba(138,166,255,.14);
-    }
+    aside h4{ margin:0 0 6px; }
+    aside p{ margin:0; font-size:13px; color:var(--muted); }
 
     footer{
       border-top:1px solid var(--line);
-      background: rgba(255,255,255,.55);
-      color:var(--muted);
+      background: rgba(255,255,255,.6);
       padding:18px 0;
       font-size:13px;
-    }
-
-    .hidden{ display:none !important; }
-
-    /* Modal lector */
-    #reader{
-      padding: 0 0 36px;
-    }
-    .readerCard{
-      padding:18px;
-      margin-top: 12px;
-    }
-    .readerTitle{ margin:6px 0 0; font-size:26px; line-height:1.2; }
-    .hr{
-      border:0;
-      border-top:1px solid var(--line);
-      margin:14px 0;
+      color:var(--muted);
+      text-align:center;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="container">
-      <div class="topbar">
-        <a class="brand" href="#inicio" aria-label="Inicio">
-          <div class="logo">
-            <!-- Si tu logo no se ve: revisa que el archivo exista en el repo y se llame EXACTO ambikon-logo.png -->
-            <img src="ambikon-logo.png" alt="Logo Ambikon" />
-          </div>
-          <div>
-            <h1>Ambikon</h1>
-            <small>Blog • Sistema Dual (CBTis 166)</small>
-          </div>
-        </a>
 
-        <nav>
-          <a href="#posts">Entradas</a>
-          <a href="#categorias">Categorías</a>
-          <a href="#acerca">Acerca</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
+<header>
+  <div class="container topbar">
+    <div class="brand">
+      <div class="logo">
+        <img src="ambikon-logo.png" alt="Ambikon">
+      </div>
+      <div>
+        <h1>Ambikon</h1>
+        <small>Blog • Modelo Dual CBTis 166</small>
       </div>
     </div>
-  </header>
 
-  <main class="container">
-    <!-- HERO -->
-    <section id="inicio" class="hero">
-      <div class="wrap">
-        <div>
-          <div class="badge"><span class="dot"></span> Educación Dual • Vinculación • Seguimiento</div>
-          <h2>Sistema Dual desde el CBTis 166</h2>
-          <p>
-            Este blog documenta y comparte información práctica sobre el modelo de formación dual:
-            coordinación escuela–empresa, seguimiento, evidencias, aprendizajes y mejoras del proceso.
-          </p>
-        </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#posts">Entradas</a>
+      <a href="#acerca">Acerca</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
 
-        <div class="cards">
-          <div class="mini">
-            <strong>Objetivo</strong>
-            <span>Concentrar avances, guías, formatos y publicaciones del proyecto.</span>
-          </div>
-          <div class="mini">
-            <strong>Enfoque</strong>
-            <span>Comunicación clara para alumnos, tutores y empresas vinculadas.</span>
-          </div>
-          <div class="mini">
-            <strong>Actualizaciones</strong>
-            <span>Entradas cortas, checklist y recomendaciones operativas.</span>
-          </div>
-          <div class="mini">
-            <strong>Marca</strong>
-            <span>Ambikon como integrador tecnológico y de documentación.</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<main class="container">
 
-    <!-- LAYOUT -->
-    <section class="layout">
-      <!-- POSTS -->
-      <div id="posts" class="card" aria-label="Entradas del blog">
-        <article class="post" data-tags="sistema-dual,cbtis166,guia" data-title="Qué es el Sistema Dual y cómo se aplica en el CBTis 166">
-          <div class="kicker">
-            <span class="chip">Guía</span>
-            <span>CBTis 166 • Educación Dual</span>
-            <span>•</span>
-            <span>Actualizado: <span id="today1"></span></span>
-          </div>
-          <h3>Qué es el Sistema Dual y cómo se aplica en el CBTis 166</h3>
-          <div class="meta">Lectura: 4 min • Autor: Ambikon</div>
-          <p class="excerpt">
-            Conceptos clave, roles (alumno, tutor escolar, tutor empresa) y qué evidencias conviene documentar para un seguimiento ordenado.
-          </p>
-          <div class="btnrow">
-            <button class="btn primary" onclick="openPost('p1')">Leer</button>
-            <span class="meta">Etiquetas: sistema-dual, cbtis166, guía</span>
-          </div>
-        </article>
-
-        <article class="post" data-tags="seguimiento,formatos,evidencias" data-title="Checklist de seguimiento semanal: evidencias y bitácora">
-          <div class="kicker">
-            <span class="chip">Checklist</span>
-            <span>Seguimiento</span>
-            <span>•</span>
-            <span>Actualizado: <span id="today2"></span></span>
-          </div>
-          <h3>Checklist de seguimiento semanal: evidencias y bitácora</h3>
-          <div class="meta">Lectura: 3 min • Autor: Ambikon</div>
-          <p class="excerpt">
-            Lista rápida de lo mínimo: actividades, evidencias, validación, incidencias y acuerdos. Ideal para mantener trazabilidad.
-          </p>
-          <div class="btnrow">
-            <button class="btn primary" onclick="openPost('p2')">Leer</button>
-            <span class="meta">Etiquetas: seguimiento, formatos, evidencias</span>
-          </div>
-        </article>
-
-        <article class="post" data-tags="vinculacion,empresa,comunicacion" data-title="Vinculación escuela–empresa: cómo estandarizar la comunicación">
-          <div class="kicker">
-            <span class="chip">Vinculación</span>
-            <span>Escuela–Empresa</span>
-            <span>•</span>
-            <span>Actualizado: <span id="today3"></span></span>
-          </div>
-          <h3>Vinculación escuela–empresa: cómo estandarizar la comunicación</h3>
-          <div class="meta">Lectura: 5 min • Autor: Ambikon</div>
-          <p class="excerpt">
-            Recomendaciones para mensajes, reportes y validaciones: menos confusión, mejor seguimiento y datos consistentes.
-          </p>
-          <div class="btnrow">
-            <button class="btn primary" onclick="openPost('p3')">Leer</button>
-            <span class="meta">Etiquetas: vinculación, empresa, comunicación</span>
-          </div>
-        </article>
-      </div>
-
-      <!-- SIDEBAR -->
-      <aside class="card" aria-label="Barra lateral">
-        <div class="box">
-          <h4>Buscar</h4>
-          <p>Busca por palabras (título o etiquetas).</p>
-          <input id="q" type="search" placeholder="Ej. seguimiento, empresa, bitácora..." />
-        </div>
-
-        <div id="categorias" class="box">
-          <h4>Categorías</h4>
-          <p>Filtra entradas por tema.</p>
-          <div class="pillrow">
-            <span class="pill" onclick="filterTag('')">Todas</span>
-            <span class="pill" onclick="filterTag('sistema-dual')">Sistema Dual</span>
-            <span class="pill" onclick="filterTag('cbtis166')">CBTis 166</span>
-            <span class="pill" onclick="filterTag('seguimiento')">Seguimiento</span>
-            <span class="pill" onclick="filterTag('vinculacion')">Vinculación</span>
-            <span class="pill" onclick="filterTag('formatos')">Formatos</span>
-          </div>
-        </div>
-
-        <div id="acerca" class="box">
-          <h4>Acerca</h4>
-          <p>
-            Edita este texto con tu descripción. Ejemplo: “Blog operativo del proyecto de Sistema Dual desde el CBTis 166.
-            Publicamos guías, formatos y mejoras del proceso”.
-          </p>
-        </div>
-
-        <div id="contacto" class="box">
-          <h4>Contacto</h4>
-          <p>Agrega tu correo o redes.</p>
-          <p style="margin-top:8px;">📧 contacto@ambikon.com</p>
-        </div>
-
-        <div class="box">
-          <h4>Nota</h4>
-          <p>Este sitio es informativo. Para trámites oficiales, siempre confirma con el plantel.</p>
-        </div>
-      </aside>
-    </section>
-
-    <!-- LECTOR -->
-    <section id="reader" class="hidden" aria-label="Lectura de entrada">
-      <div class="card readerCard">
-        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap;">
-          <div>
-            <div class="meta" id="readerMeta">Categoría • Fecha • Lectura</div>
-            <h2 class="readerTitle" id="readerTitle">Título</h2>
-          </div>
-          <button class="btn" onclick="closePost()">Volver</button>
-        </div>
-
-        <div class="meta" style="margin-top:8px" id="readerTags">Etiquetas:</div>
-        <hr class="hr" />
-        <div id="readerBody"></div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      © <span id="year"></span> Ambikon • Blog Sistema Dual (CBTis 166) • Colores pastel + GitHub Pages
+<section id="inicio" class="hero">
+  <div class="wrap">
+    <div>
+      <div class="badge"><span class="dot"></span> Educación Dual • Empresa • Empleabilidad</div>
+      <h2>Modelo Dual CBTis 166</h2>
+      <p>
+        El Sistema Dual del CBTis 166 integra aula y empresa para formar competencias técnicas y laborales,
+        elevando la empleabilidad y la pertinencia regional mediante aprendizaje práctico real.
+        Este espacio busca orientar y motivar a los estudiantes a integrarse a este modelo formativo.
+      </p>
     </div>
-  </footer>
 
-  <script>
-    // Fechas
-    const now = new Date();
-    const fmt = new Intl.DateTimeFormat("es-MX", { year:"numeric", month:"short", day:"2-digit" });
-    document.getElementById("year").textContent = now.getFullYear();
-    document.getElementById("today1").textContent = fmt.format(now);
-    document.getElementById("today2").textContent = fmt.format(now);
-    document.getElementById("today3").textContent = fmt.format(now);
+    <div class="cards">
+      <div class="mini">
+        <strong>Objetivo</strong>
+        <span>
+          Atraer y orientar a estudiantes para integrarse al Sistema Dual,
+          conectando su formación académica con experiencia real en el sector productivo.
+        </span>
+      </div>
 
-    // Búsqueda y filtros
-    const q = document.getElementById("q");
-    const posts = Array.from(document.querySelectorAll("article.post"));
-    let activeTag = "";
+      <div class="mini">
+        <strong>Enfoque</strong>
+        <span>
+          Formación práctica, desarrollo de competencias técnicas y laborales,
+          y vinculación directa con empresas para fortalecer el perfil profesional del alumno.
+        </span>
+      </div>
 
-    function matches(post){
-      const text = (post.dataset.title + " " + post.dataset.tags).toLowerCase();
-      const query = (q.value || "").toLowerCase().trim();
-      const tagOk = !activeTag || post.dataset.tags.toLowerCase().includes(activeTag);
-      const queryOk = !query || text.includes(query);
-      return tagOk && queryOk;
-    }
-    function render(){
-      posts.forEach(p => p.classList.toggle("hidden", !matches(p)));
-    }
-    q.addEventListener("input", render);
+      <div class="mini">
+        <strong>Beneficios</strong>
+        <span>
+          Experiencia laboral real, habilidades demandadas por la región
+          y mejor preparación para prácticas, empleo o continuidad de estudios.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function filterTag(tag){
-      activeTag = (tag || "").toLowerCase();
-      render();
-      document.getElementById("posts").scrollIntoView({behavior:"smooth", block:"start"});
-    }
+<section class="layout">
 
-    // Lector (contenido editable)
-    const reader = document.getElementById("reader");
-    const readerTitle = document.getElementById("readerTitle");
-    const readerMeta = document.getElementById("readerMeta");
-    const readerTags = document.getElementById("readerTags");
-    const readerBody = document.getElementById("readerBody");
+  <div id="posts" class="card">
+    <article class="post">
+      <div class="meta">Guía • Sistema Dual</div>
+      <h3>¿Qué es el Modelo Dual y cómo participar?</h3>
+      <p class="excerpt">
+        Conoce cómo funciona el Modelo Dual, qué se espera del alumno y
+        cómo puedes integrarte desde el CBTis 166.
+      </p>
+      <button class="btn">Leer más</button>
+    </article>
 
-    const content = {
-      p1: {
-        title: "Qué es el Sistema Dual y cómo se aplica en el CBTis 166",
-        meta: "Guía • " + fmt.format(now) + " • 4 min",
-        tags: "sistema-dual, cbtis166, guía",
-        body: `
-          <p><strong>Idea central:</strong> el Sistema Dual combina formación en el plantel con aprendizaje práctico en una empresa vinculada, con seguimiento y evidencias.</p>
-          <h3>Roles recomendados</h3>
-          <ul>
-            <li><strong>Alumno:</strong> registra actividades y evidencias (bitácora).</li>
-            <li><strong>Tutor escolar:</strong> da seguimiento y valida avances académicos.</li>
-            <li><strong>Tutor empresa:</strong> asigna actividades, retroalimenta y confirma evidencias.</li>
-          </ul>
-          <h3>Evidencias sugeridas</h3>
-          <ul>
-            <li>Bitácora semanal (actividades, horas, aprendizajes).</li>
-            <li>Fotos/archivos del trabajo (cuando aplique y sea permitido).</li>
-            <li>Validación del tutor (firma, comentario o check).</li>
-            <li>Incidencias y acuerdos.</li>
-          </ul>
-          <p><em>Tip Ambikon:</em> usa formatos simples y consistentes para que el historial quede claro.</p>
-        `
-      },
-      p2: {
-        title: "Checklist de seguimiento semanal: evidencias y bitácora",
-        meta: "Checklist • " + fmt.format(now) + " • 3 min",
-        tags: "seguimiento, formatos, evidencias",
-        body: `
-          <h3>Checklist mínimo semanal</h3>
-          <ol>
-            <li>Actividades realizadas (3–7 puntos claros).</li>
-            <li>Horas registradas.</li>
-            <li>Evidencias (foto/archivo/nota) según corresponda.</li>
-            <li>Aprendizaje o competencia trabajada.</li>
-            <li>Incidencias (si hubo) y solución.</li>
-            <li>Validación del tutor (empresa/escuela).</li>
-            <li>Plan de la siguiente semana.</li>
-          </ol>
-          <p>Si quieres, puedo convertir esto en un formato listo para imprimir o para Google Forms/Sheets.</p>
-        `
-      },
-      p3: {
-        title: "Vinculación escuela–empresa: cómo estandarizar la comunicación",
-        meta: "Vinculación • " + fmt.format(now) + " • 5 min",
-        tags: "vinculacion, empresa, comunicacion",
-        body: `
-          <p>Cuando hay varios alumnos y empresas, lo que más falla es la comunicación. Esto ayuda:</p>
-          <h3>Reglas simples</h3>
-          <ul>
-            <li>Un canal oficial de comunicación (correo o grupo formal).</li>
-            <li>Un formato único de reporte semanal.</li>
-            <li>Fechas fijas de entrega (ej. cada viernes).</li>
-            <li>Validación breve del tutor (check + comentario corto).</li>
-          </ul>
-          <h3>Plantilla de mensaje</h3>
-          <p><strong>Asunto:</strong> Seguimiento Dual — [Alumno] — Semana [#]</p>
-          <p><strong>Cuerpo:</strong> Actividades / Evidencias / Incidencias / Próxima semana / Validación tutor.</p>
-          <p>Con esto reduces retrabajo y mantienes trazabilidad.</p>
-        `
-      }
-    };
+    <article class="post">
+      <div class="meta">Checklist • Seguimiento</div>
+      <h3>Requisitos y compromisos del estudiante</h3>
+      <p class="excerpt">
+        Aspectos clave que debes considerar antes de incorporarte al Sistema Dual:
+        responsabilidades, tiempos y evidencias.
+      </p>
+      <button class="btn">Leer más</button>
+    </article>
+  </div>
 
-    function openPost(id){
-      const data = content[id];
-      if(!data) return;
+  <aside>
+    <div id="acerca" class="box">
+      <h4>Acerca</h4>
+      <p>
+        Blog informativo del proyecto de Modelo Dual desde el CBTis 166,
+        desarrollado con apoyo de Ambikon para la orientación y seguimiento del alumnado.
+      </p>
+    </div>
 
-      readerTitle.textContent = data.title;
-      readerMeta.textContent = data.meta;
-      readerTags.textContent = "Etiquetas: " + data.tags;
-      readerBody.innerHTML = data.body;
+    <div id="contacto" class="box">
+      <h4>Contacto</h4>
+      <p>📧 contacto@ambikon.com</p>
+    </div>
+  </aside>
 
-      // Oculta lista y muestra lector
-      document.querySelector(".layout").classList.add("hidden");
-      reader.classList.remove("hidden");
-      reader.scrollIntoView({behavior:"smooth", block:"start"});
-    }
+</section>
 
-    function closePost(){
-      reader.classList.add("hidden");
-      document.querySelector(".layout").classList.remove("hidden");
-      document.getElementById("posts").scrollIntoView({behavior:"smooth", block:"start"});
-    }
+</main>
 
-    render();
-  </script>
+<footer>
+  © 2026 Ambikon • Modelo Dual CBTis 166 • Sitio informativo
+</footer>
+
 </body>
 </html>
+
