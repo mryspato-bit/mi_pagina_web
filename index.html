@@ -1,166 +1,408 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Página Web</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Blog</title>
 
-  <!-- ESTILOS -->
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    :root{
+      --bg:#0b1220;
+      --card:#0f1a2e;
+      --text:#e7ecf5;
+      --muted:#a9b6d3;
+      --line:rgba(255,255,255,.10);
+      --accent:#4f7cff;
     }
-
-    body {
-      background-color: #f4f6f9;
-      color: #333;
-      line-height: 1.6;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #070c16 0%, #0b1220 40%, #070c16 100%);
+      color:var(--text);
+      line-height:1.6;
     }
-
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px;
+    a{color:inherit}
+    .container{width:min(1100px, 92%); margin:0 auto;}
+    header{
+      position:sticky; top:0; z-index:10;
+      background: rgba(7,12,22,.75);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
     }
-
-    header h1 {
-      margin-bottom: 5px;
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
     }
-
-    nav a {
-      color: white;
-      margin-right: 15px;
-      text-decoration: none;
-      font-weight: bold;
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
     }
-
-    nav a:hover {
-      text-decoration: underline;
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: radial-gradient(circle at 30% 30%, #7aa2ff, #2e52ff);
+      box-shadow: 0 10px 30px rgba(79,124,255,.25);
     }
-
-    main {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    .brand h1{font-size:18px; margin:0}
+    .brand small{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+    nav{display:flex; gap:12px; flex-wrap:wrap}
+    nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 10px;
+      border:1px solid transparent;
+      border-radius:10px;
     }
-
-    section {
-      margin-bottom: 30px;
+    nav a:hover{color:var(--text); border-color:var(--line); background: rgba(255,255,255,.04);}
+    .hero{
+      padding:34px 0 18px;
     }
-
-    h2 {
-      margin-bottom: 10px;
-      color: #111827;
+    .hero h2{margin:0 0 8px; font-size:34px; letter-spacing:-.02em}
+    .hero p{margin:0; color:var(--muted); max-width:68ch}
+    .layout{
+      display:grid;
+      grid-template-columns: 1.6fr .9fr;
+      gap:18px;
+      padding: 18px 0 46px;
     }
-
-    button {
-      padding: 10px 15px;
-      border: none;
-      background: #2563eb;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
+    @media (max-width: 920px){
+      .layout{grid-template-columns: 1fr;}
     }
-
-    button:hover {
-      background: #1d4ed8;
+    .card{
+      background: rgba(15,26,46,.82);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
     }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #e5e7eb;
-      margin-top: 40px;
-      font-size: 14px;
+    .post{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+    .post + .post{border-top:1px solid var(--line)}
+    .tag{
+      display:inline-flex; align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
     }
+    .dot{width:7px; height:7px; border-radius:50%; background: var(--accent);}
+    .post h3{margin:0; font-size:20px;}
+    .meta{color:var(--muted); font-size:13px}
+    .excerpt{color:var(--text); opacity:.92; margin:0}
+    .btnrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .btn{
+      text-decoration:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:9px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      color:var(--text);
+      background: rgba(255,255,255,.04);
+      font-weight:600;
+      cursor:pointer;
+    }
+    .btn:hover{border-color: rgba(79,124,255,.55); box-shadow: 0 0 0 4px rgba(79,124,255,.10)}
+    .btn.primary{
+      border-color: rgba(79,124,255,.55);
+      background: rgba(79,124,255,.18);
+    }
+    .sidebar{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .box{padding:14px; border:1px solid var(--line); border-radius:16px; background: rgba(255,255,255,.03)}
+    .box h4{margin:0 0 8px; font-size:14px}
+    .box p{margin:0; color:var(--muted); font-size:13px}
+    .search{
+      display:flex; gap:10px;
+      margin-top:8px;
+    }
+    input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus{border-color: rgba(79,124,255,.55); box-shadow: 0 0 0 4px rgba(79,124,255,.10)}
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    .pill{
+      font-size:12px;
+      color:var(--muted);
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      user-select:none;
+    }
+    .pill:hover{color:var(--text); border-color: rgba(79,124,255,.45)}
+    footer{
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      padding:18px 0;
+      font-size:13px;
+    }
+    .hidden{display:none !important;}
   </style>
 </head>
 
 <body>
-
   <header>
-    <h1>Mi Página Web</h1>
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+    <div class="container">
+      <div class="topbar">
+        <a class="brand" href="#inicio" aria-label="Inicio">
+          <div class="logo"></div>
+          <div>
+            <h1>Mi Blog</h1>
+            <small>Notas, proyectos y tutoriales</small>
+          </div>
+        </a>
+
+        <nav>
+          <a href="#posts">Entradas</a>
+          <a href="#categorias">Categorías</a>
+          <a href="#acerca">Acerca</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+    </div>
   </header>
 
-  <main>
-
-    <section id="inicio">
-      <h2>Bienvenido</h2>
+  <main class="container">
+    <section id="inicio" class="hero">
+      <h2>Bienvenido a mi blog</h2>
       <p>
-        Esta página está creada únicamente con HTML, CSS y JavaScript
-        y se puede editar directamente desde GitHub.
+        Aquí publico entradas cortas sobre lo que estoy construyendo, lo que aprendo y guías prácticas.
+        Puedes filtrar por categoría o buscar por palabra.
       </p>
-      <br>
-      <button onclick="mostrarMensaje()">Probar JavaScript</button>
-      <p id="mensaje"></p>
     </section>
 
-    <section id="servicios">
-      <h2>Servicios</h2>
-      <ul>
-        <li>Desarrollo web</li>
-        <li>Automatización de procesos</li>
-        <li>Soporte técnico</li>
-      </ul>
+    <section class="layout">
+      <!-- LISTA DE POSTS -->
+      <div id="posts" class="card" aria-label="Entradas del blog">
+        <!-- Post 1 -->
+        <article class="post" data-tags="automatizacion,web,n8n" data-title="Cómo empecé mi página en GitHub Pages">
+          <span class="tag"><span class="dot"></span> Automatización • 13 Ene 2026</span>
+          <h3>Cómo empecé mi página en GitHub Pages</h3>
+          <div class="meta">Tiempo de lectura: 3 min • Autor: Tú</div>
+          <p class="excerpt">
+            Un resumen rápido de cómo crear un repo, agregar el index.html y publicar con GitHub Pages sin instalar nada.
+          </p>
+          <div class="btnrow">
+            <a class="btn primary" href="#post1" onclick="openPost('post1')">Leer</a>
+            <span class="meta">Etiquetas: automatizacion, web, n8n</span>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="post" data-tags="tutorial,html,css" data-title="Plantilla de blog en un solo archivo HTML">
+          <span class="tag"><span class="dot"></span> Tutorial • 13 Ene 2026</span>
+          <h3>Plantilla de blog en un solo archivo HTML</h3>
+          <div class="meta">Tiempo de lectura: 4 min • Autor: Tú</div>
+          <p class="excerpt">
+            Estructura básica: header, lista de entradas, sidebar, búsqueda y filtros. Ideal para editar directo desde GitHub.
+          </p>
+          <div class="btnrow">
+            <a class="btn primary" href="#post2" onclick="openPost('post2')">Leer</a>
+            <span class="meta">Etiquetas: tutorial, html, css</span>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="post" data-tags="proyectos,cctv,redes" data-title="Checklist rápido para un proyecto de cableado">
+          <span class="tag"><span class="dot"></span> Proyectos • 13 Ene 2026</span>
+          <h3>Checklist rápido para un proyecto de cableado</h3>
+          <div class="meta">Tiempo de lectura: 5 min • Autor: Tú</div>
+          <p class="excerpt">
+            Antes de iniciar: levantamiento, ruta, canalización, PoE, etiquetado, pruebas y entrega. Una guía rápida.
+          </p>
+          <div class="btnrow">
+            <a class="btn primary" href="#post3" onclick="openPost('post3')">Leer</a>
+            <span class="meta">Etiquetas: proyectos, cctv, redes</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="card sidebar" aria-label="Barra lateral">
+        <div class="box">
+          <h4>Buscar</h4>
+          <p>Escribe una palabra (título o etiquetas).</p>
+          <div class="search">
+            <input id="q" type="search" placeholder="Ej. html, n8n, proyectos..." />
+          </div>
+        </div>
+
+        <div id="categorias" class="box">
+          <h4>Categorías</h4>
+          <p>Filtra entradas por etiqueta.</p>
+          <div class="pillrow">
+            <span class="pill" onclick="filterTag('')">Todas</span>
+            <span class="pill" onclick="filterTag('tutorial')">Tutorial</span>
+            <span class="pill" onclick="filterTag('automatizacion')">Automatización</span>
+            <span class="pill" onclick="filterTag('web')">Web</span>
+            <span class="pill" onclick="filterTag('proyectos')">Proyectos</span>
+            <span class="pill" onclick="filterTag('redes')">Redes</span>
+          </div>
+        </div>
+
+        <div id="acerca" class="box">
+          <h4>Acerca</h4>
+          <p>
+            Edita esta sección con tu descripción. Ejemplo: “Publico guías rápidas y avances de mis proyectos”.
+          </p>
+        </div>
+
+        <div id="contacto" class="box">
+          <h4>Contacto</h4>
+          <p>Agrega tu correo o redes.</p>
+          <p style="margin-top:8px;">📧 correo@tudominio.com</p>
+        </div>
+      </aside>
     </section>
 
-    <section id="contacto">
-      <h2>Contacto</h2>
-      <form onsubmit="enviarFormulario(event)">
-        <label>Nombre</label>
-        <input type="text" id="nombre" required>
+    <!-- MODAL DE POST (contenido de ejemplo) -->
+    <section id="modal" class="container hidden" aria-label="Lectura de entrada">
+      <div class="card" style="padding:18px; margin-bottom: 26px;">
+        <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap;">
+          <div>
+            <div class="meta" id="modalMeta">Categoría • Fecha</div>
+            <h2 style="margin:6px 0 0;" id="modalTitle">Título del post</h2>
+          </div>
+          <button class="btn" onclick="closePost()">Volver</button>
+        </div>
 
-        <label>Mensaje</label>
-        <textarea id="mensajeTexto" required></textarea>
+        <div style="margin-top:12px; color:var(--muted); font-size:13px" id="modalTags">Etiquetas:</div>
 
-        <button type="submit">Enviar</button>
-      </form>
-      <p id="respuesta"></p>
+        <hr style="border:0; border-top:1px solid var(--line); margin:14px 0;" />
+
+        <div id="modalBody" style="color:var(--text); opacity:.95;">
+          <!-- contenido inyectado -->
+        </div>
+      </div>
     </section>
-
   </main>
 
   <footer>
-    © <span id="anio"></span> Mi Página Web
+    <div class="container">
+      © <span id="year"></span> Mi Blog • Hecho con HTML + CSS + JS en GitHub Pages
+    </div>
   </footer>
 
-  <!-- JAVASCRIPT -->
   <script>
-    document.getElementById("anio").textContent = new Date().getFullYear();
+    const year = document.getElementById("year");
+    year.textContent = new Date().getFullYear();
 
-    function mostrarMensaje() {
-      document.getElementById("mensaje").textContent =
-        "✅ JavaScript funcionando correctamente.";
+    const q = document.getElementById("q");
+    const posts = Array.from(document.querySelectorAll("article.post"));
+
+    let activeTag = "";
+
+    function matches(post){
+      const text = (post.dataset.title + " " + post.dataset.tags).toLowerCase();
+      const query = (q.value || "").toLowerCase().trim();
+      const tagOk = !activeTag || post.dataset.tags.toLowerCase().includes(activeTag);
+      const queryOk = !query || text.includes(query);
+      return tagOk && queryOk;
     }
 
-    function enviarFormulario(event) {
-      event.preventDefault();
-      const nombre = document.getElementById("nombre").value;
-      document.getElementById("respuesta").textContent =
-        "Gracias " + nombre + ", tu mensaje fue recibido (demo).";
+    function render(){
+      posts.forEach(p => p.classList.toggle("hidden", !matches(p)));
     }
+
+    q.addEventListener("input", render);
+
+    function filterTag(tag){
+      activeTag = (tag || "").toLowerCase();
+      render();
+      // opcional: mover a posts
+      document.getElementById("posts").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    // “Leer” en modal
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalTags = document.getElementById("modalTags");
+    const modalBody = document.getElementById("modalBody");
+
+    const postContent = {
+      post1: {
+        meta: "Automatización • 13 Ene 2026 • 3 min",
+        tags: "automatizacion, web, n8n",
+        title: "Cómo empecé mi página en GitHub Pages",
+        body: `
+          <p>Pasos rápidos:</p>
+          <ol>
+            <li>Crear repositorio público.</li>
+            <li>Crear <strong>index.html</strong> en la raíz.</li>
+            <li>Ir a <strong>Settings → Pages</strong> y seleccionar <strong>main / root</strong>.</li>
+            <li>Abrir el enlace y listo.</li>
+          </ol>
+          <p>Tip: cada vez que hagas <em>Commit changes</em>, recarga tu sitio para ver los cambios.</p>
+        `
+      },
+      post2: {
+        meta: "Tutorial • 13 Ene 2026 • 4 min",
+        tags: "tutorial, html, css",
+        title: "Plantilla de blog en un solo archivo HTML",
+        body: `
+          <p>Esta plantilla está pensada para editar desde GitHub sin instalar nada.</p>
+          <ul>
+            <li>Lista de entradas.</li>
+            <li>Sidebar con búsqueda y filtros.</li>
+            <li>Modal para leer entradas (demo).</li>
+          </ul>
+          <p>Para agregar una entrada nueva, duplica un <code>&lt;article class="post"&gt;</code> y cambia título, fecha y etiquetas.</p>
+        `
+      },
+      post3: {
+        meta: "Proyectos • 13 Ene 2026 • 5 min",
+        tags: "proyectos, cctv, redes",
+        title: "Checklist rápido para un proyecto de cableado",
+        body: `
+          <p>Checklist básico:</p>
+          <ul>
+            <li>Levantamiento y plano de ruta.</li>
+            <li>Canalización y etiquetas.</li>
+            <li>Pruebas (continuidad, PoE, enlace).</li>
+            <li>Evidencias (fotos) y entrega.</li>
+          </ul>
+          <p>Esto lo puedes convertir en una plantilla estándar de tus servicios.</p>
+        `
+      }
+    };
+
+    function openPost(id){
+      const data = postContent[id];
+      if(!data) return;
+      modalTitle.textContent = data.title;
+      modalMeta.textContent = data.meta;
+      modalTags.textContent = "Etiquetas: " + data.tags;
+      modalBody.innerHTML = data.body;
+
+      // Oculta lista y muestra modal
+      document.querySelector(".layout").classList.add("hidden");
+      modal.classList.remove("hidden");
+      modal.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    function closePost(){
+      modal.classList.add("hidden");
+      document.querySelector(".layout").classList.remove("hidden");
+      document.getElementById("posts").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    // Primer render
+    render();
   </script>
-
 </body>
 </html>
+
