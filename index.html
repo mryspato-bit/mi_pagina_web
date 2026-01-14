@@ -657,8 +657,35 @@
           <b>Cobertura:</b> (edita aquí tu zona)
         </div>
       </div>
-
+      
       <div>
+        <div class="cotizador" style="margin-bottom:14px;">
+  <h4 style="margin:0 0 8px;">🎯 Cotizador rápido</h4>
+
+  <label style="font-weight:1000;">Tipo de renta</label>
+  <select id="tipoRenta" style="width:100%;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.92);font-weight:800;">
+    <option value="individual">Juego individual — $400</option>
+    <option value="paquete3">Paquete 3 juegos — $1,200</option>
+    <option value="dosMasBurbujas">2 juegos + burbujas — $1,000</option>
+  </select>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+    <div>
+      <label style="font-weight:1000;">Niños</label>
+      <input id="ninos" type="number" min="1" placeholder="Ej. 25"
+        style="width:100%;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.92);font-weight:800;">
+    </div>
+    <div>
+      <label style="font-weight:1000;">Total estimado</label>
+      <input id="total" type="text" readonly placeholder="$0"
+        style="width:100%;padding:10px 12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.92);font-weight:1000;">
+    </div>
+  </div>
+
+  <p style="margin:10px 0 0;color:var(--muted);font-weight:800;">
+    *El total depende del tipo de renta. Los premios se consideran según cantidad de niños.
+  </p>
+</div>
         <form id="form">
           <label style="font-weight:1000;">Nombre</label>
           <input name="nombre" required placeholder="Tu nombre" />
