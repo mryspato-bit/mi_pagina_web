@@ -487,7 +487,29 @@
       <h3>Catálogo</h3>
       <p>Tu lista de juegos (edita precios y detalles).</p>
     </div>
+<div class="card" style="padding:16px; margin: 14px 0;">
+  <h4 style="margin:0 0 10px;">✅ Elige tus juegos</h4>
+  <p style="margin:0 0 12px; color:var(--muted); font-weight:800;">
+    Marca lo que quieres rentar y se agregará automáticamente al mensaje de WhatsApp.
+  </p>
 
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Dardos"> Dardos</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="León traga pelotas"> León traga pelotas</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Pinta caritas"> Pinta caritas</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Inflables"> Inflables</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Juegos de canicas"> Juegos de canicas</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Máquina de burbujas"> Máquina de burbujas</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Aros"> Aros</label>
+    <label style="font-weight:900;"><input type="checkbox" class="juego" value="Lotería"> Lotería</label>
+  </div>
+
+  <div style="margin-top:12px;">
+    <button class="btn primary" id="btnCotizarSeleccion">🎉 Cotizar selección</button>
+    <p id="selStatus" style="margin:10px 0 0; color:var(--muted); font-weight:900;"></p>
+  </div>
+</div>
+    
     <div class="grid3">
       <div class="card item">
         <span class="tag"><i style="background:var(--red)"></i> Clásico</span>
@@ -636,6 +658,29 @@
       </details>
     </div>
   </section>
+<div class="card" style="padding:16px; margin-top:14px;">
+  <h4 style="margin:0 0 10px;">📌 Políticas del servicio</h4>
+
+  <details>
+    <summary>Reservación / anticipo</summary>
+    <p>Para apartar fecha se confirma disponibilidad y puede solicitarse anticipo. La fecha queda reservada al confirmar.</p>
+  </details>
+
+  <details style="margin-top:10px;">
+    <summary>Cancelaciones y cambios</summary>
+    <p>Se puede reprogramar según disponibilidad. Si cancelas el mismo día, puede aplicar cargo por logística.</p>
+  </details>
+
+  <details style="margin-top:10px;">
+    <summary>Requisitos de espacio y corriente</summary>
+    <p>Inflables y máquina de burbujas requieren toma de corriente cercana y un espacio seguro. Los juegos de mesa no requieren corriente.</p>
+  </details>
+
+  <details style="margin-top:10px;">
+    <summary>Cuidado del equipo</summary>
+    <p>El equipo debe usarse de forma responsable. Si ocurre daño por mal uso, puede aplicarse costo de reparación.</p>
+  </details>
+</div>
 
   <!-- CONTACTO -->
   <section id="contacto">
@@ -643,6 +688,30 @@
       <h3>Contacto</h3>
       <p>Cotiza en segundos.</p>
     </div>
+<section id="testimonios">
+  <div class="sectionTitle">
+    <h3>Testimonios</h3>
+    <p>Comentarios de clientes (puedes editar nombres).</p>
+  </div>
+
+  <div class="grid3">
+    <div class="card item">
+      <span class="tag"><i style="background:var(--yellow)"></i> 5/5</span>
+      <h4>“Llegaron puntual”</h4>
+      <p>“Todo muy limpio y armado rápido. Los niños se divirtieron muchísimo.” — Karla</p>
+    </div>
+    <div class="card item">
+      <span class="tag"><i style="background:var(--green)"></i> 5/5</span>
+      <h4>“Muy buena atención”</h4>
+      <p>“Nos ayudaron a elegir el paquete ideal. Excelente servicio.” — Luis</p>
+    </div>
+    <div class="card item">
+      <span class="tag"><i style="background:var(--cyan)"></i> 5/5</span>
+      <h4>“Ambiente de feria real”</h4>
+      <p>“El león traga pelotas fue el favorito. Recomendadísimos.” — Sofía</p>
+    </div>
+  </div>
+</section>
 
     <div class="card contact">
       <div>
@@ -749,6 +818,68 @@
     const link = waLink(text);
     status.innerHTML = `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con el mensaje</a>`;
   });
+  // ✅ Tu WhatsApp (ya corregido)
+  const WHATSAPP_NUMBER = "525628333104";
+
+  function waLink(text){
+    return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+  }
+
+  // ====== 1) Cotizador ======
+  const tipoRenta = document.getElementById("tipoRenta");
+  const ninos = document.getElementById("ninos");
+  const total = document.getElementById("total");
+
+  function precioBase(){
+    if(!tipoRenta) return 0;
+    if(tipoRenta.value === "individual") return 400;
+    if(tipoRenta.value === "paquete3") return 1200;
+    if(tipoRenta.value === "dosMasBurbujas") return 1000;
+    return 0;
+  }
+
+  function actualizarTotal(){
+    if(!total) return;
+    const base = precioBase();
+    total.value = "$" + base.toLocaleString("es-MX");
+  }
+
+  if(tipoRenta){ tipoRenta.addEventListener("change", actualizarTotal); }
+  if(ninos){ ninos.addEventListener("input", actualizarTotal); }
+  actualizarTotal();
+
+  // ====== 3) Selección de juegos ======
+  const btnSel = document.getElementById("btnCotizarSeleccion");
+  const selStatus = document.getElementById("selStatus");
+
+  function juegosSeleccionados(){
+    return Array.from(document.querySelectorAll(".juego:checked")).map(x => x.value);
+  }
+
+  if(btnSel){
+    btnSel.addEventListener("click", () => {
+      const juegos = juegosSeleccionados();
+      if(juegos.length === 0){
+        selStatus.textContent = "⚠️ Marca al menos un juego para cotizar.";
+        return;
+      }
+
+      const base = precioBase();
+      const n = (ninos && ninos.value) ? ninos.value : "No especificado";
+      const tipoTxt = tipoRenta ? tipoRenta.options[tipoRenta.selectedIndex].text : "No especificado";
+
+      const msg =
+        `Hola, vengo de La Feria 🎪 y quiero cotizar.\n` +
+        `Tipo de renta: ${tipoTxt}\n` +
+        `Juegos seleccionados: ${juegos.join(", ")}\n` +
+        `Niños: ${n}\n` +
+        `Total estimado: $${base}\n` +
+        `Incluye: Entrega, instalación básica y retiro, más pequeños premios según la cantidad de niños.`;
+
+      const link = waLink(msg);
+      selStatus.innerHTML = `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con la cotización</a>`;
+    });
+  }
 </script>
 </body>
 </html>
