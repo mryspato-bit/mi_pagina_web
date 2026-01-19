@@ -544,6 +544,80 @@ body{
   position: relative;
   z-index: 1;
 }
+    /* ====== GLOW GLOBAL EN TODA LA PÁGINA ====== */
+body{
+  position: relative;
+  background: linear-gradient(180deg, #fff 0%, #fff7f0 100%);
+  overflow-x: hidden;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: -120px;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 10% 10%, rgba(255, 180, 80, .28), transparent 65%),
+    radial-gradient(850px 520px at 90% 12%, rgba(255, 90, 160, .22), transparent 65%),
+    radial-gradient(950px 650px at 50% 85%, rgba(90, 210, 255, .22), transparent 70%),
+    radial-gradient(700px 520px at 25% 70%, rgba(130, 255, 180, .16), transparent 70%);
+  filter: blur(18px);
+}
+    /* ====== GLOW POR SECCIONES ====== */
+section{
+  position: relative;
+}
+
+section::before{
+  content:"";
+  position:absolute;
+  inset: -70px -20px;
+  z-index: -1;
+  pointer-events:none;
+  filter: blur(18px);
+  opacity: .55;
+  background:
+    radial-gradient(520px 280px at 15% 25%, rgba(255, 200, 120, .22), transparent 70%),
+    radial-gradient(520px 280px at 85% 35%, rgba(255, 140, 200, .18), transparent 70%),
+    radial-gradient(520px 280px at 50% 80%, rgba(120, 220, 255, .16), transparent 75%);
+}
+/* Colores distintos por sección (ajusta si cambian tus IDs) */
+#catalogo::before{
+  background:
+    radial-gradient(520px 280px at 15% 20%, rgba(120, 220, 255, .22), transparent 70%),
+    radial-gradient(520px 280px at 85% 30%, rgba(255, 200, 120, .18), transparent 70%);
+}
+
+#paquetes::before{
+  background:
+    radial-gradient(520px 280px at 20% 25%, rgba(255, 140, 200, .22), transparent 70%),
+    radial-gradient(520px 280px at 80% 35%, rgba(130, 255, 180, .16), transparent 70%);
+}
+
+#como::before{
+  background:
+    radial-gradient(520px 280px at 15% 25%, rgba(255, 200, 120, .20), transparent 70%),
+    radial-gradient(520px 280px at 85% 35%, rgba(120, 220, 255, .18), transparent 70%);
+}
+
+#faq::before{
+  background:
+    radial-gradient(520px 280px at 20% 25%, rgba(160, 140, 255, .20), transparent 70%),
+    radial-gradient(520px 280px at 80% 35%, rgba(255, 140, 200, .16), transparent 70%);
+}
+
+#testimonios::before{
+  background:
+    radial-gradient(520px 280px at 15% 25%, rgba(130, 255, 180, .18), transparent 70%),
+    radial-gradient(520px 280px at 85% 35%, rgba(255, 200, 120, .16), transparent 70%);
+}
+
+#contacto::before{
+  background:
+    radial-gradient(520px 280px at 20% 25%, rgba(255, 140, 200, .20), transparent 70%),
+    radial-gradient(520px 280px at 80% 35%, rgba(120, 220, 255, .18), transparent 70%);
+}
   </style>
 </head>
 
