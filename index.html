@@ -618,6 +618,58 @@ section::before{
     radial-gradient(800px 420px at 20% 25%, rgba(255, 120, 200, .55), transparent 60%),
     radial-gradient(800px 420px at 80% 35%, rgba(120, 220, 255, .45), transparent 60%);
 }
+    /* ====== BORDE FERIA ROJO + BLANCO ====== */
+.feria-border{
+  position: relative;
+  border-radius: 18px;
+  background: white;
+  overflow: hidden;
+}
+
+.feria-border::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  padding: 6px; /* grosor del borde */
+  border-radius: 18px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ff2d55 0 18px,
+    #ffffff 18px 36px
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events:none;
+}
+/* ====== BORDE FERIA ROJO + BLANCO ====== */
+.feria-border{
+  position: relative;
+  border-radius: 18px;
+  background: white;
+  overflow: hidden;
+}
+
+.feria-border::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  padding: 6px; /* grosor del borde */
+  border-radius: 18px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ff2d55 0 18px,
+    #ffffff 18px 36px
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events:none;
+}
   </style>
 </head>
 
