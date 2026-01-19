@@ -618,6 +618,30 @@ section::before{
     radial-gradient(800px 420px at 20% 25%, rgba(255, 120, 200, .55), transparent 60%),
     radial-gradient(800px 420px at 80% 35%, rgba(120, 220, 255, .45), transparent 60%);
 }
+    /* ====== LIMPIAR SECCIONES MUY INTENSAS ====== */
+
+/* 1) Baja el glow de estas secciones (ajusta IDs si difieren) */
+#paquetes::before,
+#como::before,
+#faq::before{
+  opacity: .35 !important;                 /* antes estaba casi 1 */
+  filter: blur(30px) !important;           /* más blur = más suave */
+  inset: -140px -60px !important;          /* más grande = menos “manchas” */
+}
+
+/* 2) Si tus cards tienen fondo degradado fuerte, los suavizamos un poco */
+#paquetes .card,
+#como .card{
+  background: rgba(255,255,255,.86) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* 3) FAQ: tarjetas/acordeón más limpias */
+#faq .card,
+#faq details,
+#faq summary{
+  background: rgba(255,255,255,.90) !important;
+}
     /* ====== BORDE FERIA ROJO + BLANCO ====== */
 .feria-border{
   position: relative;
