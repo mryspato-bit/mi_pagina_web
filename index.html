@@ -643,16 +643,14 @@ section::before{
   background: rgba(255,255,255,.90) !important;
 }
 /* =========================================================
-   FRANJAS CARPA – BLOQUE DEFINITIVO CORRECTO
+   FRANJAS CARPA – BLOQUE ÚNICO ESTABLE (SIN CONFLICTOS)
    ========================================================= */
-
 :root{
   --carpa-rojo: #ed0524;
+  --carpa-op: .45;
 }
 
-/* =========================================================
-   FRANJA PARA CUADROS NORMALES (CATÁLOGO, PAQUETES, ETC.)
-   ========================================================= */
+/* ---------- 1) FRANJA NORMAL EN TARJETAS (TODO EL SITIO) ---------- */
 .card,
 .mini{
   position: relative;
@@ -663,16 +661,14 @@ section::before{
 .mini::before{
   content:"";
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
+  top:0; left:0; width:100%;
   height:8px;
   background: repeating-linear-gradient(
     90deg,
     var(--carpa-rojo) 0 16px,
-    #ffffff 16px 32px
+    #fff 16px 32px
   );
-  opacity:.45;
+  opacity: var(--carpa-op);
   pointer-events:none;
 }
 
@@ -680,68 +676,52 @@ section::before{
 .mini::after{
   content:"";
   position:absolute;
-  top:8px;
-  left:0;
-  width:100%;
+  top:8px; left:0; width:100%;
   height:1px;
   background: rgba(0,0,0,.05);
   pointer-events:none;
 }
 
-/* =========================================================
-   POLÍTICAS DEL SERVICIO
-   → SOLO UNA FRANJA EN EL CONTENEDOR
-   ========================================================= */
+/* ---------- 2) FAQ: FRANJA SOLO EN LA SECCIÓN, NO EN CADA PREGUNTA ---------- */
 #faq{
   position: relative;
   overflow: hidden;
-  padding-top: 12px;
+  padding-top: 12px; /* deja espacio para la franja */
 }
 
 #faq::before{
   content:"";
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
+  top:0; left:0; width:100%;
   height:8px;
   background: repeating-linear-gradient(
     90deg,
     var(--carpa-rojo) 0 16px,
-    #ffffff 16px 32px
+    #fff 16px 32px
   );
-  opacity:.45;
+  opacity: var(--carpa-op);
   pointer-events:none;
-  z-index:2;
+  z-index: 5;
 }
 
 #faq::after{
   content:"";
   position:absolute;
-  top:8px;
-  left:0;
-  width:100%;
+  top:8px; left:0; width:100%;
   height:1px;
   background: rgba(0,0,0,.05);
   pointer-events:none;
-  z-index:2;
+  z-index: 5;
 }
 
-#faq > *{
-  position: relative;
-  z-index:3;
-}
-
-/* ❌ Quitar franjas SOLO a los details internos */
+/* Quita franja a cada pregunta (details) dentro de FAQ */
 #faq details::before,
 #faq details::after{
-  display:none !important;
+  content: none !important;
+  display: none !important;
 }
 
-/* =========================================================
-   CONTACTO
-   → UNA SOLA FRANJA PARA TODA LA SECCIÓN
-   ========================================================= */
+/* ---------- 3) CONTACTO: FRANJA EN TODA LA SECCIÓN + LIMPIO POR DENTRO ---------- */
 #contacto{
   position: relative;
   overflow: hidden;
@@ -751,38 +731,29 @@ section::before{
 #contacto::before{
   content:"";
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
+  top:0; left:0; width:100%;
   height:10px;
   background: repeating-linear-gradient(
     90deg,
     var(--carpa-rojo) 0 16px,
-    #ffffff 16px 32px
+    #fff 16px 32px
   );
-  opacity:.45;
+  opacity: var(--carpa-op);
   pointer-events:none;
-  z-index:2;
+  z-index: 5;
 }
 
 #contacto::after{
   content:"";
   position:absolute;
-  top:10px;
-  left:0;
-  width:100%;
+  top:10px; left:0; width:100%;
   height:1px;
   background: rgba(0,0,0,.06);
   pointer-events:none;
-  z-index:2;
+  z-index: 5;
 }
 
-#contacto > *{
-  position: relative;
-  z-index:3;
-}
-
-/* ❌ Quitar franjas internas SOLO en contacto */
+/* En contacto: NO franjas internas */
 #contacto .card::before,
 #contacto .card::after,
 #contacto .mini::before,
@@ -791,7 +762,15 @@ section::before{
 #contacto details::after,
 #contacto pre::before,
 #contacto pre::after{
-  display:none !important;
+  content: none !important;
+  display: none !important;
+}
+
+/* Asegura que el contenido siempre quede arriba */
+#faq > *,
+#contacto > *{
+  position: relative;
+  z-index: 6;
 }
   </style>
 </head>
