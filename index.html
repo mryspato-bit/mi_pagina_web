@@ -642,57 +642,32 @@ section::before{
 #faq summary{
   background: rgba(255,255,255,.90) !important;
 }
-    /* ====== BORDE FERIA ROJO + BLANCO ====== */
+    /* ===== BORDE FERIA (ROJO/BLANCO) - MÉTODO SEGURO ===== */
 .feria-border{
-  position: relative;
-  border-radius: 18px;
-  background: white;
-  overflow: hidden;
-}
-
-.feria-border::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  padding: 6px; /* grosor del borde */
-  border-radius: 18px;
-  background: repeating-linear-gradient(
+  border: 6px solid transparent; /* grosor del borde */
+  border-image: repeating-linear-gradient(
     90deg,
     #ff2d55 0 18px,
     #ffffff 18px 36px
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events:none;
-}
-/* ====== BORDE FERIA ROJO + BLANCO ====== */
-.feria-border{
-  position: relative;
+  ) 6 round;
   border-radius: 18px;
-  background: white;
-  overflow: hidden;
+  background: rgba(255,255,255,.90);
+  overflow: hidden; /* para que respete el redondeo */
 }
-
-.feria-border::before{
-  content:"";
-  position:absolute;
-  inset: 0;
-  padding: 6px; /* grosor del borde */
-  border-radius: 18px;
-  background: repeating-linear-gradient(
+/* APLÍCALO A TUS CAJAS (ajusta si tus clases son diferentes) */
+.heroCard,
+.mini,
+.card,
+.sidePanel,
+details{
+  border: 6px solid transparent !important;
+  border-image: repeating-linear-gradient(
     90deg,
     #ff2d55 0 18px,
     #ffffff 18px 36px
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events:none;
+  ) 6 round !important;
+  border-radius: 18px !important;
+  overflow: hidden;
 }
   </style>
 </head>
