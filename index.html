@@ -836,27 +836,27 @@ section::before{
   }
 }
 /* =========================
-   HEADER SIEMPRE FIJO (SOLO MÓVIL)
+   HEADER FIJO REAL (SOLO MÓVIL) - ÚNICO
    ========================= */
 @media (max-width: 820px){
   header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2000;
-    background: rgba(255,255,255,.96);
-    backdrop-filter: blur(10px);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    background: rgba(255,255,255,.96) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    transform: none !important;
   }
 
-  /* Para que el panel del menú (nav) no se esconda debajo del header */
   .topbar{
     position: relative;
   }
-}
-    @media (max-width: 820px){
+
   body{
-    padding-top: var(--headerH, 80px);
+    padding-top: var(--headerH, 90px) !important;
   }
 }
   </style>
@@ -1351,12 +1351,13 @@ section::before{
 <footer>
   © <span id="year"></span> La Feria • Renta de juegos
 </footer>
-
 <script>
   // ✅ WhatsApp (México: 52 + 10 dígitos)
   const WHATSAPP_NUMBER = "525628333104";
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  // Año en footer (si existe)
+  const yearEl = document.getElementById("year");
+  if(yearEl) yearEl.textContent = new Date().getFullYear();
 
   function waLink(text){
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
@@ -1425,7 +1426,8 @@ section::before{
         `Incluye: Entrega, instalación básica y retiro, más pequeños premios según la cantidad de niños.`;
 
       const link = waLink(msg);
-      if(selStatus) selStatus.innerHTML = `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con la cotización</a>`;
+      if(selStatus) selStatus.innerHTML =
+        `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con la cotización</a>`;
     });
   }
 
@@ -1448,51 +1450,64 @@ section::before{
         `Detalle: ${mensaje}`;
 
       const link = waLink(msg);
-      if(status) status.innerHTML = `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con el mensaje</a>`;
+      if(status) status.innerHTML =
+        `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con el mensaje</a>`;
     });
   }
-(function(){
-  const btn = document.getElementById('menuToggle');
-  const nav = document.getElementById('siteNav');
-  if(!btn || !nav) return;
 
-  function setOpen(open){
-    nav.classList.toggle('isOpen', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  btn.addEventListener('click', () => {
-    setOpen(!nav.classList.contains('isOpen'));
-  });
-
-  nav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => setOpen(false));
-  });
-
-  document.addEventListener('click', (e) => {
-    if(nav.classList.contains('isOpen') &&
-       !nav.contains(e.target) &&
-       !btn.contains(e.target)){
-      setOpen(false);
-    }
-  });
-
-  window.addEventListener('resize', () => {
-    if(window.innerWidth > 820) setOpen(false);
-  });
-})();
+  // ===== MENU HAMBURGUESA =====
   (function(){
-  function setHeaderOffset(){
+    const btn = document.getElementById('menuToggle');
+    const nav = document.getElementById('siteNav');
+    if(!btn || !nav) return;
+
+    function setOpen(open){
+      nav.classList.toggle('isOpen', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    btn.addEventListener('click', () => {
+      setOpen(!nav.classList.contains('isOpen'));
+    });
+
+    nav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => setOpen(false));
+    });
+
+    document.addEventListener('click', (e) => {
+      if(nav.classList.contains('isOpen') &&
+         !nav.contains(e.target) &&
+         !btn.contains(e.target)){
+        setOpen(false);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if(window.innerWidth > 820) setOpen(false);
+    });
+  })();
+
+  // ===== ALTURA HEADER (para padding-top cuando está fixed) =====
+  (function(){
     const header = document.querySelector('header');
     if(!header) return;
-    const h = Math.ceil(header.getBoundingClientRect().height);
-    document.documentElement.style.setProperty('--headerH', h + 'px');
-  }
 
-  window.addEventListener('load', setHeaderOffset);
-  window.addEventListener('resize', setHeaderOffset);
-  setHeaderOffset();
-})();
+    function setHeaderOffset(){
+      const h = Math.ceil(header.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--headerH', h + 'px');
+    }
+
+    window.addEventListener('load', setHeaderOffset);
+    window.addEventListener('resize', setHeaderOffset);
+
+    // Clave para Android/Chrome: barras del navegador cambian viewport al deslizar
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize', setHeaderOffset);
+      window.visualViewport.addEventListener('scroll', setHeaderOffset);
+    }
+
+    setHeaderOffset();
+  })();
 </script>
 </body>
 </html>
