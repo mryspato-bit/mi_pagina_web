@@ -385,67 +385,66 @@
       0%,100%{ transform: scale(1); opacity: .9; }
       50%{ transform: scale(1.18); opacity: 1; }
     }
-    /* ====== MOBILE: Header más compacto (sin afectar PC) ====== */
+    /* ====== MOBILE ULTRA COMPACT HEADER ====== */
 @media (max-width: 600px){
 
-  /* 1) Encabezado más bajito */
+  /* Header: aún más bajito */
   header{
-    padding: 8px 0 !important;
+    padding: 4px 0 !important;
   }
 
-  /* 2) La barra superior se acomoda en columna y reduce espacios */
   .topbar{
-    padding: 10px 12px !important;
-    gap: 10px !important;
+    padding: 6px 10px !important;
+    gap: 6px !important;
     align-items: flex-start !important;
   }
 
-  /* 3) Marca + textos más pequeños */
+  /* Logo */
   .mark{
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 14px !important;
-    font-size: 22px !important;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 20px !important;
+    border-radius: 12px !important;
   }
 
+  /* Título principal */
   .brand h1{
-    font-size: 28px !important;
+    font-size: 30px !important;   /* ⬆️ letras más grandes */
     line-height: 1.05 !important;
     margin: 0 !important;
   }
 
+  /* Subtítulo */
   .brand small{
-    font-size: 12px !important;
-    line-height: 1.3 !important;
+    font-size: 13px !important;   /* ⬆️ un poco más grande */
+    line-height: 1.35 !important;
   }
 
-  /* 4) El menú deja de “apilarse” enorme y se vuelve compacto */
+  /* Menú */
   nav{
     width: 100% !important;
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 8px !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
+    gap: 6px !important;
   }
 
   nav a{
-    padding: 8px 10px !important;
-    font-size: 13px !important;
+    padding: 6px 10px !important; /* ⬇️ botones más bajos */
+    font-size: 14px !important;   /* ⬆️ texto más grande */
     border-radius: 999px !important;
-    white-space: nowrap !important;
   }
 
-  /* 5) El hero ya no arranca tan abajo */
+  /* Evita espacio extra antes del hero */
   .hero{
-    padding-top: 12px !important;
+    padding-top: 6px !important;
     margin-top: 0 !important;
   }
 
   .heroCard{
-    padding-top: 14px !important;
+    padding-top: 10px !important;
   }
 }
+
   </style>
 </head>
 
