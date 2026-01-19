@@ -1064,6 +1064,54 @@ header .brand > div > small{
     justify-content: center !important;
   }
 }
+    /* ===== FIX CENTRADO MOVIL (AFECTA HERO + CONTENEDORES) ===== */
+@media (max-width: 820px){
+
+  /* el contenedor ocupa casi toda la pantalla */
+  .container{
+    width: 98% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* quita cualquier padding lateral raro en móvil */
+  main.container{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* el hero card se centra y no se “carga” a un lado */
+  .heroCard{
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* el contenido interno del hero: 1 columna, centrado */
+  .heroInner{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* panel derecho (si existe) baja y se centra */
+  .sidePanel{
+    width: 100% !important;
+    max-width: 520px;
+    margin: 12px auto 0 auto !important;
+  }
+
+  /* botones centrados */
+  .ctaRow{
+    justify-content: center !important;
+  }
+
+  /* leones centrados */
+  .lionStage{
+    justify-content: center !important;
+  }
+}
   </style>
 </head>
 
