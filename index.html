@@ -642,21 +642,45 @@ section::before{
 #faq summary{
   background: rgba(255,255,255,.90) !important;
 }
-    /* ===== BORDE FERIA SUAVE (SOLO CUADROS GRANDES) ===== */
+ /* ===== CARPA: SOLO FRANJA SUPERIOR EN CADA CUADRO ===== */
 
-/* Cuadros GRANDES solamente */
-.heroCard,
-.sidePanel{
-  border: 4px solid transparent; /* más delgado */
-  border-radius: 22px;
-  background: rgba(255,255,255,.92);
-  overflow: hidden;
+/* Ajusta aquí qué elementos son "cuadritos" */
+.card, .mini, details{
+  position: relative;
+  overflow: hidden;            /* para que la franja respete bordes redondeados */
+}
 
-  border-image: repeating-linear-gradient(
+/* Franja tipo carpa arriba */
+.card::before,
+.mini::before,
+details::before{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 14px;                /* grosor de la franja */
+  background: repeating-linear-gradient(
     90deg,
-    #ff6b6b 0 16px,     /* rojo pastel */
-    #ffffff 16px 32px
-  ) 4 round;
+    #ff4d6d 0 18px,            /* rojo */
+    #ffffff 18px 36px          /* blanco */
+  );
+  opacity: .55;                /* más limpio (sube a .7 si lo quieres más marcado) */
+  pointer-events:none;
+}
+
+/* Un separador sutil debajo de la franja */
+.card::after,
+.mini::after,
+details::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 14px;
+  width: 100%;
+  height: 1px;
+  background: rgba(0,0,0,.06);
+  pointer-events:none;
 }
   </style>
 </head>
