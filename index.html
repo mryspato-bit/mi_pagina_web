@@ -1962,6 +1962,102 @@ header .brand > div > small{
     }
   });
 })();
+  // ===== CONFIGURACIÓN DE LA API =====
+const API_BASE = "https://laferia.infinityfreeapp.com/api";
+
+// Seguridad básica
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, s => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[s]));
+}
+
+// ===== LEER COMENTARIOS =====
+async function cargarComentarios() {
+  const res = await fetch(`${API_BASE}/comentario_list.php`);
+  const data = await res.json();
+
+  const list = document.getElementById("commentList");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  if (!data.ok) {
+    list.innerHTML = "<p>Error al cargar comentarios</p>";
+    return;
+  }
+
+  data.data.forEach(c => {
+    const item = document.createElement("article");
+    item.className = "review";
+    item.innerHTML = `
+      <strong>${escapeHtml(c.nombre)}</strong>
+      <span>⭐ ${c.calificacion}/5</span>
+      <p>${escapeHtml(c.comentario)}</p>
+      <small>${c.fecha}</small>
+    `;
+    list.appendChild(item);
+  });
+}
+  // ===== ENVIAR COMENTARIO =====
+async function enviarComentario(nombre, comentario, calificacion) {
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 12000);
+
+  try {
+    const res = await fetch(`${API_BASE}/comentario_add.php`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre, comentario, calificacion }),
+      signal: controller.signal
+    });
+    return await res.json();
+  } finally {
+    clearTimeout(t);
+  }
+}
+// ===== FORMULARIO =====
+window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("commentForm");
+  const status = document.getElementById("commentStatus");
+
+  if (!form) return;
+
+  cargarComentarios(); // cargar al abrir la página
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fd = new FormData(form);
+    const nombre = fd.get("nombre")?.trim();
+    const comentario = fd.get("comentario")?.trim();
+    const calificacion = parseInt(fd.get("rating"), 10);
+
+    if (!nombre || !comentario || !(calificacion >= 1 && calificacion <= 5)) {
+      status.textContent = "⚠️ Completa todos los campos";
+      return;
+    }
+
+    const btn = form.querySelector("button[type='submit']");
+    btn.disabled = true;
+    status.textContent = "⏳ Enviando…";
+
+    try {
+      const r = await enviarComentario(nombre, comentario, calificacion);
+      if (r.ok) {
+        status.textContent = "✅ Comentario guardado";
+        form.reset();
+        await cargarComentarios();
+      } else {
+        status.textContent = "❌ Error al guardar";
+      }
+    } catch {
+      status.textContent = "⏱️ Tardó demasiado, intenta otra vez";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+});
 </script>
 </body>
 </html>
