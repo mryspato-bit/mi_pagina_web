@@ -1727,59 +1727,59 @@ header .brand > div > small{
 
   // Año en footer (si existe)
   const yearEl = document.getElementById("year");
-  if(yearEl) yearEl.textContent = new Date().getFullYear();
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  function waLink(text){
+  function waLink(text) {
     return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
   }
 
-  function defaultText(){
+  function defaultText() {
     return "Hola, vengo de La Feria 🎪. Quiero cotizar renta de juegos. " +
-           "Tipo: ___ | Fecha: ___ | Zona: ___ | Horario: ___ | Juegos: ___";
+      "Tipo: ___ | Fecha: ___ | Zona: ___ | Horario: ___ | Juegos: ___";
   }
 
   // Botones principales de WhatsApp
   const btnHero = document.getElementById("btn-wa");
   const btnContacto = document.getElementById("btn-wa-2");
-  if(btnHero) btnHero.href = waLink(defaultText());
-  if(btnContacto) btnContacto.href = waLink(defaultText());
+  if (btnHero) btnHero.href = waLink(defaultText());
+  if (btnContacto) btnContacto.href = waLink(defaultText());
 
   // ====== Cotizador ======
   const tipoRenta = document.getElementById("tipoRenta");
   const ninos = document.getElementById("ninos");
   const total = document.getElementById("total");
 
-  function precioBase(){
-    if(!tipoRenta) return 0;
-    if(tipoRenta.value === "individual") return 400;
-    if(tipoRenta.value === "paquete3") return 1200;
-    if(tipoRenta.value === "dosMasBurbujas") return 1000;
+  function precioBase() {
+    if (!tipoRenta) return 0;
+    if (tipoRenta.value === "individual") return 400;
+    if (tipoRenta.value === "paquete3") return 1200;
+    if (tipoRenta.value === "dosMasBurbujas") return 1000;
     return 0;
   }
 
-  function actualizarTotal(){
-    if(!total) return;
+  function actualizarTotal() {
+    if (!total) return;
     const base = precioBase();
     total.value = "$" + base.toLocaleString("es-MX");
   }
 
-  if(tipoRenta) tipoRenta.addEventListener("change", actualizarTotal);
-  if(ninos) ninos.addEventListener("input", actualizarTotal);
+  if (tipoRenta) tipoRenta.addEventListener("change", actualizarTotal);
+  if (ninos) ninos.addEventListener("input", actualizarTotal);
   actualizarTotal();
 
   // ====== Selección de juegos (Catálogo) ======
   const btnSel = document.getElementById("btnCotizarSeleccion");
   const selStatus = document.getElementById("selStatus");
 
-  function juegosSeleccionados(){
+  function juegosSeleccionados() {
     return Array.from(document.querySelectorAll(".juego:checked")).map(x => x.value);
   }
 
-  if(btnSel){
+  if (btnSel) {
     btnSel.addEventListener("click", () => {
       const juegos = juegosSeleccionados();
-      if(juegos.length === 0){
-        if(selStatus) selStatus.textContent = "⚠️ Marca al menos un juego para cotizar.";
+      if (juegos.length === 0) {
+        if (selStatus) selStatus.textContent = "⚠️ Marca al menos un juego para cotizar.";
         return;
       }
 
@@ -1796,7 +1796,7 @@ header .brand > div > small{
         `Incluye: Entrega, instalación básica y retiro, más pequeños premios según la cantidad de niños.`;
 
       const link = waLink(msg);
-      if(selStatus) selStatus.innerHTML =
+      if (selStatus) selStatus.innerHTML =
         `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con la cotización</a>`;
     });
   }
@@ -1805,7 +1805,7 @@ header .brand > div > small{
   const form = document.getElementById("form");
   const status = document.getElementById("status");
 
-  if(form){
+  if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -1820,18 +1820,18 @@ header .brand > div > small{
         `Detalle: ${mensaje}`;
 
       const link = waLink(msg);
-      if(status) status.innerHTML =
+      if (status) status.innerHTML =
         `✅ Listo. <a href="${link}" target="_blank" rel="noopener">Abrir WhatsApp con el mensaje</a>`;
     });
   }
 
   // ===== MENU HAMBURGUESA =====
-  (function(){
+  (function () {
     const btn = document.getElementById('menuToggle');
     const nav = document.getElementById('siteNav');
-    if(!btn || !nav) return;
+    if (!btn || !nav) return;
 
-    function setOpen(open){
+    function setOpen(open) {
       nav.classList.toggle('isOpen', open);
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
@@ -1845,24 +1845,24 @@ header .brand > div > small{
     });
 
     document.addEventListener('click', (e) => {
-      if(nav.classList.contains('isOpen') &&
-         !nav.contains(e.target) &&
-         !btn.contains(e.target)){
+      if (nav.classList.contains('isOpen') &&
+        !nav.contains(e.target) &&
+        !btn.contains(e.target)) {
         setOpen(false);
       }
     });
 
     window.addEventListener('resize', () => {
-      if(window.innerWidth > 820) setOpen(false);
+      if (window.innerWidth > 820) setOpen(false);
     });
   })();
 
   // ===== ALTURA HEADER (para padding-top cuando está fixed) =====
-  (function(){
+  (function () {
     const header = document.querySelector('header');
-    if(!header) return;
+    if (!header) return;
 
-    function setHeaderOffset(){
+    function setHeaderOffset() {
       const h = Math.ceil(header.getBoundingClientRect().height);
       document.documentElement.style.setProperty('--headerH', h + 'px');
     }
@@ -1870,98 +1870,111 @@ header .brand > div > small{
     window.addEventListener('load', setHeaderOffset);
     window.addEventListener('resize', setHeaderOffset);
 
-    // Clave para Android/Chrome: barras del navegador cambian viewport al deslizar
-    if(window.visualViewport){
+    if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', setHeaderOffset);
       window.visualViewport.addEventListener('scroll', setHeaderOffset);
     }
 
     setHeaderOffset();
   })();
-  // ===== Comentarios (con BD: se guarda en tu API PHP + MySQL) =====
-(function () {
-  const API_BASE = "https://laferia.infinityfreeapp.com/api";
 
-  const form = document.getElementById("commentForm");
-  const list = document.getElementById("commentList");
-  const status = document.getElementById("commentStatus");
-  if (!form || !list) return;
+  // ===== Comentarios (BD: API PHP + MySQL) =====
+  (function () {
+    const API_BASE = "https://laferia.infinityfreeapp.com/api";
 
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, s => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[s]));
-  }
+    const form = document.getElementById("commentForm");
+    const list = document.getElementById("commentList");
+    const status = document.getElementById("commentStatus");
+    if (!form || !list) return;
 
-  function renderComments(rows) {
-    // Limpia lista (quita el ejemplo si lo dejaste)
-    list.innerHTML = "";
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[s]));
+    }
 
-    rows.forEach(c => {
-      const item = document.createElement("article");
-      item.className = "review";
-      item.innerHTML = `
-        <div class="reviewTop">
-          <span class="pill">⭐ ${escapeHtml(c.calificacion)}/5</span>
-          <span class="muted">${escapeHtml(c.fecha)}</span>
-        </div>
-        <h3>“Comentario”</h3>
-        <p>“${escapeHtml(c.comentario)}” — ${escapeHtml(c.nombre)}</p>
-      `;
-      list.appendChild(item);
+    function renderComments(rows) {
+      list.innerHTML = "";
+      rows.forEach(c => {
+        const item = document.createElement("article");
+        item.className = "review";
+        item.innerHTML = `
+          <div class="reviewTop">
+            <span class="pill">⭐ ${escapeHtml(c.calificacion)}/5</span>
+            <span class="muted">${escapeHtml(c.fecha)}</span>
+          </div>
+          <h3>“Comentario”</h3>
+          <p>“${escapeHtml(c.comentario)}” — ${escapeHtml(c.nombre)}</p>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    async function cargarComentarios() {
+      const res = await fetch(`${API_BASE}/comentario_list.php`);
+      const data = await res.json();
+
+      if (!data.ok) {
+        if (status) status.textContent = "❌ No se pudieron cargar comentarios.";
+        return;
+      }
+      renderComments(data.data || []);
+    }
+
+    async function enviarComentario(nombre, comentario, calificacion) {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 12000); // 12s máximo
+
+      try {
+        const res = await fetch(`${API_BASE}/comentario_add.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, comentario, calificacion }),
+          signal: controller.signal
+        });
+        return await res.json();
+      } finally {
+        clearTimeout(t);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", cargarComentarios);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const fd = new FormData(form);
+      const nombre = String(fd.get("nombre") || "").trim();
+      const comentario = String(fd.get("comentario") || "").trim();
+      const calificacion = parseInt(String(fd.get("rating") || "0"), 10);
+
+      if (!nombre || !comentario || !(calificacion >= 1 && calificacion <= 5)) {
+        if (status) status.textContent = "⚠️ Completa nombre, comentario y calificación (1 a 5).";
+        return;
+      }
+
+      const btn = form.querySelector("button[type='submit']");
+      if (btn) btn.disabled = true;
+
+      if (status) status.textContent = "⏳ Enviando…";
+
+      try {
+        const r = await enviarComentario(nombre, comentario, calificacion);
+
+        if (r.ok) {
+          form.reset();
+          if (status) status.textContent = "✅ ¡Gracias! Tu comentario se guardó.";
+          await cargarComentarios();
+        } else {
+          if (status) status.textContent = "❌ Error: " + (r.error || "No se pudo guardar");
+        }
+      } catch (err) {
+        if (status) status.textContent = "⏱️ Tardó demasiado. Intenta otra vez.";
+      } finally {
+        if (btn) btn.disabled = false;
+      }
     });
-  }
-
-  async function cargarComentarios() {
-    const res = await fetch(`${API_BASE}/comentario_list.php`);
-    const data = await res.json();
-
-    if (!data.ok) {
-      if (status) status.textContent = "❌ No se pudieron cargar comentarios.";
-      return;
-    }
-    renderComments(data.data || []);
-  }
-
-  async function enviarComentario(nombre, comentario, calificacion) {
-    const res = await fetch(`${API_BASE}/comentario_add.php`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, comentario, calificacion })
-    });
-    return await res.json();
-  }
-
-  // Cargar comentarios al abrir la página
-  window.addEventListener("DOMContentLoaded", cargarComentarios);
-
-  // Enviar comentario al submit del formulario
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const fd = new FormData(form);
-    const nombre = String(fd.get("nombre") || "").trim();
-    const comentario = String(fd.get("comentario") || "").trim();
-    const calificacion = parseInt(String(fd.get("rating") || "0"), 10);
-
-    if (!nombre || !comentario || !(calificacion >= 1 && calificacion <= 5)) {
-      if (status) status.textContent = "⚠️ Completa nombre, comentario y calificación (1 a 5).";
-      return;
-    }
-
-    if (status) status.textContent = "⏳ Enviando…";
-
-    const r = await enviarComentario(nombre, comentario, calificacion);
-
-    if (r.ok) {
-      form.reset();
-      if (status) status.textContent = "✅ ¡Gracias! Tu comentario se guardó.";
-      await cargarComentarios();
-    } else {
-      if (status) status.textContent = "❌ Error: " + (r.error || "No se pudo guardar");
-    }
-  });
-})();
+  })();
 </script>
 </body>
 </html>
