@@ -1112,6 +1112,66 @@ header .brand > div > small{
     justify-content: center !important;
   }
 }
+    /* ===== Comentarios (estilo tipo Testimonios) ===== */
+.section{ padding: 26px 0; }
+.sectionHead{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; margin: 6px 0 14px;
+}
+.sectionHead h2{ margin:0; font-size: clamp(20px, 2.3vw, 28px); }
+
+.grid2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form{ display:grid; gap: 10px; margin-top: 10px; }
+.form label span{ display:block; font-weight:700; font-size: 13px; margin-bottom: 6px; }
+
+.form input, .form textarea, .form select{
+  width:100%;
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 14px;
+  padding: 12px 12px;
+  font: inherit;
+  background: rgba(255,255,255,.75);
+  outline: none;
+}
+.form textarea{ resize: vertical; }
+
+.reviews{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.review{
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 18px;
+  padding: 14px 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.06);
+}
+.reviewTop{
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  margin-bottom: 10px;
+}
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.75);
+  font-weight: 800;
+  font-size: 12px;
+}
+.review h3{ margin: 0 0 6px; font-size: 16px; }
+.review p{ margin:0; color: var(--muted); font-weight: 600; }
+
+@media (max-width: 820px){
+  .grid2{ grid-template-columns: 1fr; }
+}
   </style>
 </head>
 
@@ -1513,6 +1573,62 @@ header .brand > div > small{
       </div>
     </div>
   </section>
+  <section class="section" id="comentarios">
+  <div class="sectionHead">
+    <h2>Comentarios</h2>
+    <div class="muted">Deja tu opinión 👇</div>
+  </div>
+
+  <div class="grid2">
+    <!-- Form -->
+    <div class="card commentCard">
+      <div class="badge"><span class="dot"></span> Escribe un comentario</div>
+
+      <form id="commentForm" class="form">
+        <label>
+          <span>Tu nombre</span>
+          <input name="nombre" type="text" placeholder="Ej. Karla" required />
+        </label>
+
+        <label>
+          <span>Tu comentario</span>
+          <textarea name="comentario" rows="4" placeholder="¿Qué te pareció el servicio?" required></textarea>
+        </label>
+
+        <label>
+          <span>Calificación</span>
+          <select name="rating">
+            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+            <option value="4">⭐⭐⭐⭐ (4)</option>
+            <option value="3">⭐⭐⭐ (3)</option>
+            <option value="2">⭐⭐ (2)</option>
+            <option value="1">⭐ (1)</option>
+          </select>
+        </label>
+
+        <button class="btn primary" type="submit">✅ Enviar comentario</button>
+        <div id="commentStatus" class="muted" style="margin-top:8px;"></div>
+      </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="card">
+      <div class="badge"><span class="dot"></span> Comentarios recientes</div>
+
+      <div class="reviews" id="commentList">
+        <!-- Ejemplo (puedes borrar esto si quieres iniciar vacío) -->
+        <article class="review">
+          <div class="reviewTop">
+            <span class="pill">⭐ 5/5</span>
+            <span class="muted">Ahora</span>
+          </div>
+          <h3>“Excelente”</h3>
+          <p>“Muy buen servicio y súper puntuales.” — Anónimo</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ✅ CONTACTO: a todo lo ancho + 2 columnas abajo -->
   <section id="contacto">
@@ -1761,6 +1877,60 @@ header .brand > div > small{
 
     setHeaderOffset();
   })();
+  // ===== Comentarios (sin BD: se guarda mientras la página esté abierta) =====
+(function(){
+  const form = document.getElementById("commentForm");
+  const list = document.getElementById("commentList");
+  const status = document.getElementById("commentStatus");
+  if(!form || !list) return;
+
+  function timeNow(){
+    const d = new Date();
+    return d.toLocaleString("es-MX", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" });
+  }
+
+  function stars(n){
+    n = Number(n) || 5;
+    return `⭐ ${n}/5`;
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const fd = new FormData(form);
+    const nombre = (fd.get("nombre") || "").toString().trim();
+    const comentario = (fd.get("comentario") || "").toString().trim();
+    const rating = (fd.get("rating") || "5").toString();
+
+    if(!nombre || !comentario){
+      if(status) status.textContent = "⚠️ Escribe tu nombre y comentario.";
+      return;
+    }
+
+    const title =
+      rating === "5" ? "“Excelente”" :
+      rating === "4" ? "“Muy bueno”" :
+      rating === "3" ? "“Bueno”" :
+      rating === "2" ? "“Regular”" : "“Malo”";
+
+    const item = document.createElement("article");
+    item.className = "review";
+    item.innerHTML = `
+      <div class="reviewTop">
+        <span class="pill">${stars(rating)}</span>
+        <span class="muted">${timeNow()}</span>
+      </div>
+      <h3>${title}</h3>
+      <p>“${comentario.replace(/</g,"&lt;").replace(/>/g,"&gt;")}” — ${nombre.replace(/</g,"&lt;").replace(/>/g,"&gt;")}</p>
+    `;
+
+    // Agrega arriba
+    list.prepend(item);
+
+    form.reset();
+    if(status) status.textContent = "✅ ¡Gracias! Tu comentario se agregó abajo.";
+  });
+})();
 </script>
 </body>
 </html>
