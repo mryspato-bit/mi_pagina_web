@@ -1878,66 +1878,27 @@ header .brand > div > small{
     setHeaderOffset();
   })();
 
-  // ===== Comentarios (BD: API PHP + MySQL) =====
-  (function () {
-    const API_BASE = "https://laferia.infinityfreeapp.com/api";
+ async function enviarComentario(nombre, comentario, calificacion) {
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 30000);
 
-    const form = document.getElementById("commentForm");
-    const list = document.getElementById("commentList");
-    const status = document.getElementById("commentStatus");
-    if (!form || !list) return;
+  try {
+    const fd = new FormData();
+    fd.append("nombre", nombre);
+    fd.append("comentario", comentario);
+    fd.append("calificacion", String(calificacion));
 
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, s => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-      }[s]));
-    }
+    const res = await fetch(`${API_BASE}/comentario_add.php`, {
+      method: "POST",
+      body: fd,
+      signal: controller.signal
+    });
 
-    function renderComments(rows) {
-      list.innerHTML = "";
-      rows.forEach(c => {
-        const item = document.createElement("article");
-        item.className = "review";
-        item.innerHTML = `
-          <div class="reviewTop">
-            <span class="pill">⭐ ${escapeHtml(c.calificacion)}/5</span>
-            <span class="muted">${escapeHtml(c.fecha)}</span>
-          </div>
-          <h3>“Comentario”</h3>
-          <p>“${escapeHtml(c.comentario)}” — ${escapeHtml(c.nombre)}</p>
-        `;
-        list.appendChild(item);
-      });
-    }
-
-    async function cargarComentarios() {
-      const res = await fetch(`${API_BASE}/comentario_list.php`);
-      const data = await res.json();
-
-      if (!data.ok) {
-        if (status) status.textContent = "❌ No se pudieron cargar comentarios.";
-        return;
-      }
-      renderComments(data.data || []);
-    }
-
-    async function enviarComentario(nombre, comentario, calificacion) {
-      const controller = new AbortController();
-      const t = setTimeout(() => controller.abort(), 12000); // 12s máximo
-
-      try {
-        const res = await fetch(`${API_BASE}/comentario_add.php`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nombre, comentario, calificacion }),
-          signal: controller.signal
-        });
-        return await res.json();
-      } finally {
-        clearTimeout(t);
-      }
-    }
-
+    return await res.json();
+  } finally {
+    clearTimeout(t);
+  }
+}
     window.addEventListener("DOMContentLoaded", cargarComentarios);
 
     form.addEventListener("submit", async (e) => {
