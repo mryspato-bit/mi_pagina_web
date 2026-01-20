@@ -1932,6 +1932,49 @@ header .brand > div > small{
     if(status) status.textContent = "✅ ¡Gracias! Tu comentario se agregó abajo.";
   });
 })();
+const API_BASE = "https://laferia.infinityfreeapp.com/api";
+
+async function cargarComentarios() {
+  const res = await fetch(`${API_BASE}/comentario_list.php`);
+  const data = await res.json();
+
+  const cont = document.getElementById("comentariosLista");
+  if (!cont) return;
+
+  if (!data.ok) {
+    cont.innerHTML = "<p>No se pudieron cargar comentarios.</p>";
+    return;
+  }
+
+  cont.innerHTML = data.data.map(c => `
+    <div style="border:1px solid #ccc; padding:10px; margin:10px 0; border-radius:8px;">
+      <strong>${escapeHtml(c.nombre)}</strong> — ⭐ ${c.calificacion}/5
+      <div style="margin-top:6px;">${escapeHtml(c.comentario)}</div>
+      <small style="opacity:.7;">${c.fecha}</small>
+    </div>
+  `).join("");
+}
+
+async function enviarComentario(nombre, comentario, calificacion) {
+  const res = await fetch(`${API_BASE}/comentario_add.php`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, comentario, calificacion })
+  });
+
+  const data = await res.json();
+  return data;
+}
+
+// seguridad básica para no inyectar HTML
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, s => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[s]));
+}
+
+// Cuando cargue la página, trae comentarios
+window.addEventListener("DOMContentLoaded", cargarComentarios);
 </script>
 </body>
 </html>
